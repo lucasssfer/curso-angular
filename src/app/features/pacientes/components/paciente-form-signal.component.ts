@@ -3,12 +3,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PacienteService } from '../services/paciente.service';
 import { STATUS_PACIENTE, type Paciente, type StatusPaciente } from '../../../models/paciente';
 
-type PacienteSignalForm = {
+interface PacienteSignalForm {
   nome: string;
   cpf: string;
   dataNascimento: string;
   status: StatusPaciente;
-};
+}
 
 @Component({
   selector: 'app-paciente-form-signal',
@@ -21,7 +21,11 @@ type PacienteSignalForm = {
       <form (ngSubmit)="salvar()">
         <div>
           <label for="nome-signal">Nome</label>
-          <input id="nome-signal" [value]="form().nome" (input)="atualizarCampo('nome', $any($event.target).value)" />
+          <input
+            id="nome-signal"
+            [value]="form().nome"
+            (input)="atualizarCampo('nome', $any($event.target).value)"
+          />
 
           @if (touched().nome && nomeInvalido()) {
             <small>Nome deve ter pelo menos 3 caracteres.</small>
@@ -30,7 +34,11 @@ type PacienteSignalForm = {
 
         <div>
           <label for="cpf-signal">CPF</label>
-          <input id="cpf-signal" [value]="form().cpf" (input)="atualizarCampo('cpf', $any($event.target).value)" />
+          <input
+            id="cpf-signal"
+            [value]="form().cpf"
+            (input)="atualizarCampo('cpf', $any($event.target).value)"
+          />
 
           @if (touched().cpf && cpfInvalido()) {
             <small>CPF inválido.</small>
@@ -39,7 +47,12 @@ type PacienteSignalForm = {
 
         <div>
           <label for="dataNascimento-signal">Data de nascimento</label>
-          <input id="dataNascimento-signal" type="date" [value]="form().dataNascimento" (input)="atualizarCampo('dataNascimento', $any($event.target).value)" />
+          <input
+            id="dataNascimento-signal"
+            type="date"
+            [value]="form().dataNascimento"
+            (input)="atualizarCampo('dataNascimento', $any($event.target).value)"
+          />
 
           @if (touched().dataNascimento && dataNascimentoInvalida()) {
             <small>Data inválida ou futura.</small>
@@ -48,15 +61,23 @@ type PacienteSignalForm = {
 
         <div>
           <label for="status-signal">Status</label>
-          <select id="status-signal" [value]="form().status" (change)="atualizarCampo('status', $any($event.target).value)">
+          <select
+            id="status-signal"
+            [value]="form().status"
+            (change)="atualizarCampo('status', $any($event.target).value)"
+          >
             @for (status of STATUS_PACIENTE; track status) {
               <option [value]="status">{{ status }}</option>
             }
           </select>
         </div>
 
-        <button type="submit" [disabled]="formInvalido() || salvando()">{{ salvando() ? 'Enviando...' : 'Criar com signals' }}</button>
-        @if (mensagem()) { <p class="success">{{ mensagem() }}</p> }
+        <button type="submit" [disabled]="formInvalido() || salvando()">
+          {{ salvando() ? 'Enviando...' : 'Criar com signals' }}
+        </button>
+        @if (mensagem()) {
+          <p class="success">{{ mensagem() }}</p>
+        }
       </form>
     </section>
   `,
@@ -81,7 +102,9 @@ export class PacienteFormSignalComponent {
     dataNascimento: false,
   });
 
-  readonly nomeInvalido = computed(() => this.form().nome.trim().length < 3 && this.form().nome.length > 0);
+  readonly nomeInvalido = computed(
+    () => this.form().nome.trim().length < 3 && this.form().nome.length > 0,
+  );
   readonly cpfInvalido = computed(() => {
     const cpf = this.form().cpf.replace(/\D/g, '');
     return cpf.length !== 11 && cpf.length > 0;
@@ -99,7 +122,9 @@ export class PacienteFormSignalComponent {
   });
 
   readonly formInvalido = computed(() => {
-    return this.form().nome.trim().length < 3 || this.cpfInvalido() || this.dataNascimentoInvalida();
+    return (
+      this.form().nome.trim().length < 3 || this.cpfInvalido() || this.dataNascimentoInvalida()
+    );
   });
 
   atualizarCampo(chave: keyof PacienteSignalForm, valor: string): void {

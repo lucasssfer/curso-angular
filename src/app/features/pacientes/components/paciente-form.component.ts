@@ -1,5 +1,14 @@
 import { Component, inject, output, signal } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { PacienteService } from '../services/paciente.service';
 import { STATUS_PACIENTE, type Paciente, type StatusPaciente } from '../../../models/paciente';
 
@@ -107,8 +116,12 @@ function dataNascimentoNaoFutura(): ValidatorFn {
         </select>
       </div>
 
-      <button type="submit" [disabled]="form.invalid || salvando()">{{ salvando() ? 'Enviando...' : 'Criar paciente' }}</button>
-      @if (mensagem()) { <p class="success">{{ mensagem() }}</p> }
+      <button type="submit" [disabled]="form.invalid || salvando()">
+        {{ salvando() ? 'Enviando...' : 'Criar paciente' }}
+      </button>
+      @if (mensagem()) {
+        <p class="success">{{ mensagem() }}</p>
+      }
     </form>
   `,
 })
