@@ -11,8 +11,12 @@ export class PacienteListStore {
   readonly pacientes = this.pacientesState.asReadonly();
   readonly carregando = this.carregandoState.asReadonly();
   readonly erro = this.erroState.asReadonly();
-  readonly totalAtivos = computed(() => this.pacientesState().filter((paciente) => paciente.ativo).length);
-  readonly totalInativos = computed(() => this.pacientesState().filter((paciente) => !paciente.ativo).length);
+  readonly totalAtivos = computed(
+    () => this.pacientesState().filter((paciente) => paciente.ativo).length,
+  );
+  readonly totalInativos = computed(
+    () => this.pacientesState().filter((paciente) => !paciente.ativo).length,
+  );
 
   carregar(): void {
     this.carregandoState.set(true);
@@ -31,10 +35,8 @@ export class PacienteListStore {
   marcarInativo(id: string): void {
     this.pacientesState.update((pacientes) =>
       pacientes.map((paciente) =>
-        paciente.id === id
-          ? { ...paciente, ativo: false, status: 'INATIVO' }
-          : paciente
-      )
+        paciente.id === id ? { ...paciente, ativo: false, status: 'INATIVO' } : paciente,
+      ),
     );
   }
 }

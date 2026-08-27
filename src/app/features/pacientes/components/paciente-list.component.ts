@@ -12,7 +12,13 @@ import { PacienteSelectionPanelComponent } from './paciente-selection-panel.comp
 @Component({
   selector: 'app-paciente-list',
   standalone: true,
-  imports: [FormsModule, PacienteCardComponent, PacienteFormComponent, PacienteFormSignalComponent, PacienteSelectionPanelComponent],
+  imports: [
+    FormsModule,
+    PacienteCardComponent,
+    PacienteFormComponent,
+    PacienteFormSignalComponent,
+    PacienteSelectionPanelComponent,
+  ],
   providers: [PacienteListStore, PacienteSelecaoStore],
   template: `
     <section class="paciente-list">
@@ -24,25 +30,31 @@ import { PacienteSelectionPanelComponent } from './paciente-selection-panel.comp
         </div>
         <div class="header-actions">
           <span class="active-count">{{ listStore.totalAtivos() }} ativos</span>
-          <button type="button" class="refresh-button" (click)="recarregar()">Atualizar lista</button>
+          <button type="button" class="refresh-button" (click)="recarregar()">
+            Atualizar lista
+          </button>
         </div>
       </header>
 
       <div class="toolbar">
         <label for="filtro">Buscar paciente</label>
-      <input
-        id="filtro"
-        type="text"
-        [ngModel]="filtro()"
-        (ngModelChange)="onFiltroChange($event)"
-        placeholder="Buscar por nome ou CPF"
-      />
+        <input
+          id="filtro"
+          type="text"
+          [ngModel]="filtro()"
+          (ngModelChange)="onFiltroChange($event)"
+          placeholder="Buscar por nome ou CPF"
+        />
         <div class="api-actions">
           <button type="button" (click)="testarBuscarPorId()">Testar busca por ID</button>
           <button type="button" (click)="testarAtualizacao()">Testar atualização</button>
-          <button type="button" class="danger-button" (click)="testarRemocao()">Testar remoção</button>
+          <button type="button" class="danger-button" (click)="testarRemocao()">
+            Testar remoção
+          </button>
         </div>
-        @if (resultadoApi()) { <p class="success">{{ resultadoApi() }}</p> }
+        @if (resultadoApi()) {
+          <p class="success">{{ resultadoApi() }}</p>
+        }
       </div>
 
       @if (listStore.carregando()) {
@@ -66,13 +78,17 @@ import { PacienteSelectionPanelComponent } from './paciente-selection-panel.comp
 
             <app-paciente-card [paciente]="paciente" />
             @if (paciente.ativo) {
-              <button type="button" class="inactive-button" (click)="marcarInativo(paciente.id)">Marcar inativo</button>
+              <button type="button" class="inactive-button" (click)="marcarInativo(paciente.id)">
+                Marcar inativo
+              </button>
             }
           </div>
         }
       }
 
-      @if (listStore.erro()) { <p class="error">{{ listStore.erro() }}</p> }
+      @if (listStore.erro()) {
+        <p class="error">{{ listStore.erro() }}</p>
+      }
     </section>
 
     <app-paciente-selection-panel />
@@ -90,7 +106,9 @@ export class PacienteListComponent {
   readonly resultadoApi = signal<string | null>(null);
   readonly pacientesFiltrados = computed(() => {
     const texto = this.filtro().trim().toLowerCase();
-    return this.listStore.pacientes().filter((paciente) => `${paciente.nome} ${paciente.cpf}`.toLowerCase().includes(texto));
+    return this.listStore
+      .pacientes()
+      .filter((paciente) => `${paciente.nome} ${paciente.cpf}`.toLowerCase().includes(texto));
   });
 
   constructor() {

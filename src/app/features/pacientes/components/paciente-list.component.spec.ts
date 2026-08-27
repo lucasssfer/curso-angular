@@ -7,7 +7,14 @@ import { PacienteListStore } from '../stores/paciente-list.store';
 import { PacienteListComponent } from './paciente-list.component';
 
 const pacientesDoComponente: Paciente[] = [
-  { id: '1', nome: 'Maria Souza', cpf: '12345678901', dataNascimento: new Date('1985-03-12'), ativo: true, status: 'ATIVO' },
+  {
+    id: '1',
+    nome: 'Maria Souza',
+    cpf: '12345678901',
+    dataNascimento: new Date('1985-03-12'),
+    ativo: true,
+    status: 'ATIVO',
+  },
 ];
 
 class PacienteServiceComponentMock {
@@ -23,7 +30,10 @@ describe('PacienteListComponent', () => {
   it('chama buscarTodos no início e preenche pacientes()', () => {
     TestBed.configureTestingModule({
       imports: [PacienteListComponent],
-      providers: [provideRouter([]), { provide: PacienteService, useClass: PacienteServiceComponentMock }],
+      providers: [
+        provideRouter([]),
+        { provide: PacienteService, useClass: PacienteServiceComponentMock },
+      ],
     });
 
     const fixture = TestBed.createComponent(PacienteListComponent);

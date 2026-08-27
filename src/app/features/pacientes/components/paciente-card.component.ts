@@ -29,4 +29,3 @@ export class PacienteCardComponent {
     this.selecaoStore.selecionar(this.paciente());
   }
 }
-

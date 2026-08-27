@@ -5,8 +5,22 @@ import { PacienteService } from '../services/paciente.service';
 import { PacienteListStore } from './paciente-list.store';
 
 const pacientesDeTeste: Paciente[] = [
-  { id: '1', nome: 'Ativo', cpf: '12345678901', dataNascimento: new Date('1990-01-01'), ativo: true, status: 'ATIVO' },
-  { id: '2', nome: 'Inativo', cpf: '12345678902', dataNascimento: new Date('1991-01-01'), ativo: false, status: 'INATIVO' },
+  {
+    id: '1',
+    nome: 'Ativo',
+    cpf: '12345678901',
+    dataNascimento: new Date('1990-01-01'),
+    ativo: true,
+    status: 'ATIVO',
+  },
+  {
+    id: '2',
+    nome: 'Inativo',
+    cpf: '12345678902',
+    dataNascimento: new Date('1991-01-01'),
+    ativo: false,
+    status: 'INATIVO',
+  },
 ];
 
 class PacienteServiceMock {

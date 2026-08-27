@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Paciente } from '../models/paciente';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PacienteService {
   private readonly pacientes: Paciente[] = [
@@ -12,7 +12,7 @@ export class PacienteService {
       cpf: '12345678901',
       dataNascimento: new Date(1985, 4, 12),
       ativo: true,
-      status: 'ATIVO'
+      status: 'ATIVO',
     },
     {
       id: '2',
@@ -20,8 +20,8 @@ export class PacienteService {
       cpf: '98765432100',
       dataNascimento: new Date(1978, 9, 3),
       ativo: true,
-      status: 'PENDENTE'
-    }
+      status: 'PENDENTE',
+    },
   ];
 
   buscarPorId(id: string): Paciente | undefined {

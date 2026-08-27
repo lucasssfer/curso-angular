@@ -15,11 +15,17 @@ import { PacienteService } from '../services/paciente.service';
       @if (paciente()) {
         <h2>{{ paciente()?.nome }}</h2>
         <p>ID: {{ paciente()?.id }}</p>
-        <p>Status: <strong>{{ paciente()?.status }}</strong></p>
+        <p>
+          Status: <strong>{{ paciente()?.status }}</strong>
+        </p>
         <p>CPF: {{ paciente()?.cpf }}</p>
         <p>Nascimento: {{ paciente()?.dataNascimento | date: 'dd/MM/yyyy' }}</p>
       } @else {
-        @if (erro()) { <p class="error">{{ erro() }}</p> } @else { <p>Carregando paciente...</p> }
+        @if (erro()) {
+          <p class="error">{{ erro() }}</p>
+        } @else {
+          <p>Carregando paciente...</p>
+        }
       }
     </section>
   `,
@@ -34,7 +40,8 @@ export class PacienteDetailComponent {
   constructor() {
     effect(() => {
       const pacienteId = this.id();
-      this.pacienteService.buscarPorId(pacienteId)
+      this.pacienteService
+        .buscarPorId(pacienteId)
         .pipe(takeUntilDestroyed(this.destroyRef))
         .subscribe({
           next: (paciente) => this.paciente.set(paciente),

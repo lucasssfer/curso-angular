@@ -4,13 +4,13 @@ import { Observable, map } from 'rxjs';
 import { API_URL } from '../../../core/tokens/api-url.token';
 import { Paciente } from '../../../models/paciente';
 
-type JsonPlaceholderUser = {
+interface JsonPlaceholderUser {
   id: number;
   name?: string;
   username?: string;
   email?: string;
   phone?: string;
-};
+}
 
 @Injectable({ providedIn: 'root' })
 export class PacienteService {
@@ -18,27 +18,33 @@ export class PacienteService {
   private readonly apiUrl = inject(API_URL).replace(/\/+$/, '');
 
   buscarTodos(): Observable<Paciente[]> {
-    return this.http.get<JsonPlaceholderUser[]>(`${this.apiUrl}/users`).pipe(
-      map((usuarios) => usuarios.map((usuario) => this.mapToPaciente(usuario)))
-    );
+    return this.http
+      .get<JsonPlaceholderUser[]>(`${this.apiUrl}/users`)
+      .pipe(map((usuarios) => usuarios.map((usuario) => this.mapToPaciente(usuario))));
   }
 
   buscarPorId(id: string): Observable<Paciente> {
-    return this.http.get<JsonPlaceholderUser>(`${this.apiUrl}/users/${id}`).pipe(
-      map((usuario) => this.mapToPaciente(usuario))
-    );
+    return this.http
+      .get<JsonPlaceholderUser>(`${this.apiUrl}/users/${id}`)
+      .pipe(map((usuario) => this.mapToPaciente(usuario)));
   }
 
   criar(paciente: Paciente): Observable<Paciente> {
-    return this.http.post<JsonPlaceholderUser>(`${this.apiUrl}/users`, this.fromPacienteToJsonPlaceholder(paciente)).pipe(
-      map((usuario) => this.mapToPaciente(usuario))
-    );
+    return this.http
+      .post<JsonPlaceholderUser>(
+        `${this.apiUrl}/users`,
+        this.fromPacienteToJsonPlaceholder(paciente),
+      )
+      .pipe(map((usuario) => this.mapToPaciente(usuario)));
   }
 
   atualizar(id: string, paciente: Paciente): Observable<Paciente> {
-    return this.http.put<JsonPlaceholderUser>(`${this.apiUrl}/users/${id}`, this.fromPacienteToJsonPlaceholder(paciente)).pipe(
-      map((usuario) => this.mapToPaciente(usuario))
-    );
+    return this.http
+      .put<JsonPlaceholderUser>(
+        `${this.apiUrl}/users/${id}`,
+        this.fromPacienteToJsonPlaceholder(paciente),
+      )
+      .pipe(map((usuario) => this.mapToPaciente(usuario)));
   }
 
   remover(id: string): Observable<void> {
