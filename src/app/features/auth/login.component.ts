@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+﻿import { Component, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,11 @@ import { RouterLink } from '@angular/router';
   `,
 })
 export class LoginComponent {
+  private router = inject(Router);
+  private auth = inject(AuthService);
+
   entrar(): void {
-    localStorage.setItem('token', 'fake-token');
-    window.location.href = '/pacientes';
+    this.auth.login('fake-token');
+    this.router.navigate(['/pacientes']);
   }
 }
